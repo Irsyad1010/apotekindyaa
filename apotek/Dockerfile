@@ -1,19 +1,18 @@
 FROM php:8.2-apache
 
-# Hilangkan warning apache ServerName
+# Hilangkan warning apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Install ekstensi PostgreSQL
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+# Install PostgreSQL extension
+RUN apt-get update && apt-get install -y libpq-dev \
+  && docker-php-ext-install pdo pdo_pgsql
 
-# Aktifkan mod_rewrite untuk .htaccess
+# Aktifkan mod_rewrite
 RUN a2enmod rewrite
 
-# Copy isi folder `web/` ke direktori root apache
+# Copy isi folder web/ ke direktori html
 COPY ./web /var/www/html/
 
-# Atur hak akses agar bisa dibaca Apache
+# Atur hak akses
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
