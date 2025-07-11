@@ -1,11 +1,12 @@
 <?php
-$host = getenv('DB_HOST') ?: 'db';
-$db = getenv('DB_NAME') ?: 'apotek';
-$user = getenv('DB_USER') ?: 'postgres';
-$pass = getenv('DB_PASS') ?: 'admin';
+$host = getenv('PGHOST');
+$port = getenv('PGPORT');
+$db   = getenv('PGDATABASE');
+$user = getenv('PGUSER');
+$pass = getenv('PGPASSWORD');
 
 try {
-    $pdo = new PDO("pgsql:host=$host;dbname=$db", $user, $pass);
+    $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$db", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Koneksi gagal: " . $e->getMessage());
