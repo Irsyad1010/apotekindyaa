@@ -1,18 +1,18 @@
-# Gunakan image PHP + Apache
 FROM php:8.2-apache
 
-# Instal ekstensi yg diperlukan
+# Install PostgreSQL extension
 RUN apt-get update && apt-get install -y libpq-dev \
  && docker-php-ext-install pdo_pgsql pgsql
 
-# Copy source code
+# Copy file ke public folder Apache
 COPY apotek/ /var/www/html/
 
-# Pastikan htaccess (jika ada) berfungsi
+# Aktifkan mod_rewrite (opsional)
 RUN a2enmod rewrite
 
-# Railway memberi PORT dinamis → gunakan ENV
+# Override port Apache agar pakai PORT dari Railway
 ENV PORT=8080
-EXPOSE 8080
+RUN echo "Listen ${PORT}" > /etc/apache2/ports.conf
 
+EXPOSE 8080
 CMD ["apache2-foreground"]
