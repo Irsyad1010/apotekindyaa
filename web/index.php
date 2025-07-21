@@ -4,7 +4,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 ?>
 
-
 <?php include 'includes/header.php'; ?>
 
 <section class="container mx-auto px-4 py-16 text-center">
